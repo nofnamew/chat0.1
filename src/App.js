@@ -1,25 +1,69 @@
-import logo from './logo.svg';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
+import React from 'react';
+import { Auth } from './comp/Auth';
+import Cookies from 'universal-cookie'
+import { Chat } from './comp/chat';
+import { signOut } from 'firebase/auth';
+import { auth } from './firebase-config'; 
+const cookies = new Cookies();
+
 
 function App() {
+
+  const [isAuth, setIsAuth] = useState(cookies.get("auth-token"))
+  const [room, setroom] = useState("")
+
+  const refreshPage = () => { 
+    window.location.reload(false); 
+  }
+
+  const signUserOut = async () =>{
+    await signOut(auth)
+    cookies.remove("auth-token")
+
+    refreshPage()
+  };
+
+  const roomInputRef = useRef(null)
+  if (!isAuth){
+
+    return (
+    <>
+      <div className='App'>
+        <Auth setIsAuth={setIsAuth}></Auth>
+      </div>
+    </>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  <>
+    <>
+    {room ?  (<Chat room={room}></Chat>): 
+
+    (<div className='room'>
+      <label>Szoba neve:</label>
+
+
+      <input ref={roomInputRef}></input>
+
+
+      <button onClick={() => setroom(roomInputRef.current.value)}>Belépés</button>
+
+
+
     </div>
-  );
+      ) 
+    
+    
+    }
+      <div className="signout">
+        <button onClick={signUserOut}>Kilépés</button>
+      </div> 
+    </>
+  </>
+  )
 }
 
 export default App;
