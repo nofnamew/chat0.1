@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import {db} from './firebase-config.js'
 import './App.css';
 import React from 'react';
 import { Auth } from './comp/Auth';
 import Cookies from 'universal-cookie'
 import { Chat } from './comp/chat';
 import { signOut } from 'firebase/auth';
-import { auth } from './firebase-config'; 
+import { auth } from './firebase-config';
+import {result} from './comp/Auth.js' 
 const cookies = new Cookies();
 
 
@@ -24,6 +26,7 @@ function App() {
 
     refreshPage()
   };
+
 
   const roomInputRef = useRef(null)
   if (!isAuth){
@@ -59,7 +62,7 @@ function App() {
     
     }
       <div className="signout">
-        <button onClick={signUserOut}>Kilépés</button>
+        <button onClick={signUserOut}>Kilépés a fiókból</button>
       </div> 
     </>
   </>

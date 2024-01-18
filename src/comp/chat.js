@@ -50,6 +50,11 @@ export const Chat = (props) => {
         setNewMessage("")
     };
 
+
+    const signRoomOut = async () =>{
+        window.location.reload(false); 
+      };
+
     return(
         <>
             <div className="chat-app">
@@ -81,6 +86,12 @@ export const Chat = (props) => {
 
                 
             </div>
+
+
+
+            <div className="signoutroom">
+                <button onClick={signRoomOut}>Kilépés a szobából</button>
+            </div> 
         </>
     )
 }

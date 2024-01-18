@@ -14,6 +14,7 @@ export const Auth = (props) => {
         try{
             const result = await signInWithPopup(auth, provider)
             cookies.set("auth-token", result.user.refreshToken)
+            console.log(result.user.email)
             setIsAuth(true);
         } catch (err){
             console.log(err)
@@ -21,7 +22,7 @@ export const Auth = (props) => {
     };
 
     return <div className="auth">
-        <p>Sign in with Google</p>
-        <button onClick={signInWithGoogle}>Sign</button>
+        <p>Bejelentkezés Google fiókkal</p>
+        <button onClick={signInWithGoogle}>Bejelentkezés</button>
     </div>
 }
