@@ -1,6 +1,11 @@
 import {auth, provider} from "../firebase-config.js"
-import { signInWithPopup } from "firebase/auth"
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
 import '../style/Auth.css'
+import React from "react"
+import { useState } from "react"
+import { SignIn } from "./SignIn.js"
+import { SignUp } from "./SignUp.js"
+import { SignGoogle } from "./SignGoogle.js"
 
 import Cookies from 'universal-cookie'
 
@@ -8,21 +13,11 @@ const cookies = new Cookies()
 
 export const Auth = (props) => {
 
-    const { setIsAuth } = props
-
-    const signInWithGoogle = async () =>{
-        try{
-            const result = await signInWithPopup(auth, provider)
-            cookies.set("auth-token", result.user.refreshToken)
-            console.log(result.user.email)
-            setIsAuth(true);
-        } catch (err){
-            console.log(err)
-        }
-    };
+    const [isAuth, setIsAuth] = useState(cookies.get("auth-token"))
 
     return <div className="auth">
-        <p>Bejelentkezés Google fiókkal</p>
-        <button onClick={signInWithGoogle}>Bejelentkezés</button>
+        <SignUp setIsAuth={setIsAuth}/>
+
+        <SignGoogle setIsAuth={setIsAuth}></SignGoogle>
     </div>
 }

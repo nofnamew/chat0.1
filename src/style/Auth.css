@@ -22,3 +22,16 @@ body{
     font-size: 18px;
     cursor: pointer;
 }
+
+.signin {
+    display: block;
+    padding: 80px;
+}
+
+.signin input{
+    border: 2px solid;
+    margin: 18px;
+    padding: 10px;
+    height: 50%;
+    box-sizing: border-box;
+}
